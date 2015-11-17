@@ -36,7 +36,7 @@
     primary_key: true
     hidden: true
   
-  - dimension: day_from_signup_to_paid
+  - dimension: conversion_to_paid_days
     type: tier
     tiers: [0,7,14,30,60,90]
     style: relational
