@@ -19,8 +19,10 @@
     type: int
     sql: ${TABLE}.USER_ID
 
-  - dimension: dt_signup
-    type: string
+  - dimension: signup
+    type: time
+    timeframes: [date, week, month, year,day_of_week, week_of_year]
+    convert_tz: false
     sql: ${TABLE}.DT_SIGNUP
 
   - dimension: user_gender
@@ -35,7 +37,7 @@
     type: string
     sql: ${TABLE}.USER_STATE
 
-  - dimension: dt_joined
+  - dimension: subscription_start
     type: time
     timeframes: [date, week, month, year,day_of_week, week_of_year]
     convert_tz: false
@@ -45,7 +47,7 @@
     type: int
     sql: ${TABLE}.PLAN_TYPE
 
-  - dimension: dt_cancelled
+  - dimension: subscription_cancelled
     type: string
     sql: ${TABLE}.DT_CANCELLED
 
