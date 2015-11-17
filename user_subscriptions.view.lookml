@@ -12,7 +12,7 @@
     type: yesno
     sql: |
       ${TABLE}.DT_CANCELLED IS NULL
-
+    
   - dimension_group: subscription_start
     type: time
     timeframes: [date, week, month, year,day_of_week, week_of_year]
@@ -23,10 +23,10 @@
     type: string
     sql: |
       CASE 
-        WHEN ${TABLE}.PLAN_TYPE=0 THEN 'Free Trial'
-        WHEN ${TABLE}.PLAN_TYPE=1 THEN 'Bronze'
-        WHEN ${TABLE}.PLAN_TYPE=2 THEN 'Silver'
-        WHEN ${TABLE}.PLAN_TYPE=3 THEN 'Gold'
+        WHEN ${TABLE}.PLAN_TYPE=0 THEN 'A. Free Trial'
+        WHEN ${TABLE}.PLAN_TYPE=1 THEN 'B. Bronze'
+        WHEN ${TABLE}.PLAN_TYPE=2 THEN 'C. Silver'
+        WHEN ${TABLE}.PLAN_TYPE=3 THEN 'D. Gold'
         ELSE 'N/A'
       END
 
@@ -41,7 +41,7 @@
     tiers: [0,7,14,30,60,90]
     style: relational
     sql: |
-      DAYS(${TABLE}.DT_JOINED) - DAYS(${TABLE}.DT_SIGNUP)
+      DAYS(${subscription_start_date}) - DAYS(${user_signups.signup_date})
 
   - measure: count
     type: count
