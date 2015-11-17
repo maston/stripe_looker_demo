@@ -10,8 +10,9 @@
               S.DT_JOINED,
               S.PLAN_TYPE,
               S.DT_CANCELLED
-            FROM USER_SIGNUPS U, USER_SUBSCRIPTIONS S 
-            WHERE U.USER_ID = S.USER_ID
+            FROM USER_SIGNUPS U
+            LEFT JOIN USER_SUBSCRIPTIONS S 
+            ON U.USER_ID = S.USER_ID
 
   fields:
 
@@ -26,13 +27,26 @@
     sql: ${TABLE}.DT_SIGNUP
 
   - dimension: user_gender
-    type: int
-    sql: ${TABLE}.USER_GENDER
+    type: string
+    sql: |
+      CASE 
+        WHEN ${TABLE}.USER_GENDER=0 THEN 'Male'
+        WHEN ${TABLE}.USER_GENDER=1 THEN 'Female'
+        ELSE 'N/A'
+      END
 
   - dimension: user_age_group
-    type: int
-    sql: ${TABLE}.USER_AGE_GROUP
-
+    type: string
+    sql: |
+      CASE 
+        WHEN ${TABLE}.USER_AGE_GROUP=1 THEN 'A. under 21'
+        WHEN ${TABLE}.USER_AGE_GROUP=2 THEN 'B. 21 - 25'
+        WHEN ${TABLE}.USER_AGE_GROUP=3 THEN 'C. 26 - 30'
+        WHEN ${TABLE}.USER_AGE_GROUP=4 THEN 'D. 31 - 40'
+        WHEN ${TABLE}.USER_AGE_GROUP=5 THEN 'E. 40+'
+        ELSE 'N/A'
+      END
+      
   - dimension: user_state
     type: string
     sql: ${TABLE}.USER_STATE
@@ -44,17 +58,35 @@
     sql: ${TABLE}.DT_JOINED
 
   - dimension: plan_type
-    type: int
-    sql: ${TABLE}.PLAN_TYPE
-
-  - dimension: subscription_cancelled
     type: string
-    sql: ${TABLE}.DT_CANCELLED
+    sql: |
+      CASE 
+        WHEN ${TABLE}.PLAN_TYPE=0 THEN 'Free Trial'
+        WHEN ${TABLE}.PLAN_TYPE=1 THEN 'Bronze'
+        WHEN ${TABLE}.PLAN_TYPE=2 THEN 'Silver'
+        WHEN ${TABLE}.PLAN_TYPE=3 THEN 'Gold'
+        ELSE 'N/A'
+      END
 
-#   - dimension: conversion_tier
-#     type: tier
-#     sql: days (current date) - days (date('1999-10-22'))
+  - dimension: is_cancelled
+    type: yesno
+    sql: |
+      ${TABLE}.DT_CANCELLED IS NOT NULL
     
+  - dimension: subscription_cancelled
+    type: time
+    timeframes: [date, week, month, year,day_of_week, week_of_year]
+    convert_tz: false
+    sql: ${TABLE}.DT_CANCELLED IS NOT NULL
+
+
+  - dimension: day_from_signup_to_paid
+    type: tier
+    tiers: [0,7,14,30,60,90]
+    style: relational
+    sql: |
+      DAYS(${TABLE}.DT_JOINED) - DAYS(${TABLE}.DT_SIGNUP)
+
   - measure: count
     type: count
     drill_fields: detail*
