@@ -5,7 +5,7 @@
 
 - explore: stripe_pmts
 
-- explore: user_info
+# - explore: user_info
 
 - explore: user_signups
   joins: 
