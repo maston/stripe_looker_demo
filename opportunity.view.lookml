@@ -19,7 +19,7 @@
   - dimension: campaign_id
     sql: ${TABLE}.CAMPAIGN_ID
 
-  - dimension: churn_status_c
+  - dimension: churn_status
     sql: ${TABLE}.CHURN_STATUS_C
 
   - dimension_group: closed
@@ -28,7 +28,7 @@
     convert_tz: false
     sql: ${TABLE}.CLOSED_DATE
 
-  - dimension: contract_length_c
+  - dimension: contract_length
     sql: ${TABLE}.CONTRACT_LENGTH_C
 
   - dimension_group: created
@@ -40,7 +40,7 @@
     sql: ${TABLE}.ID
     primary_key: true
 
-  - dimension: is_cancelled_c
+  - dimension: is_cancelled
     sql: ${TABLE}.IS_CANCELLED_C
 
   - dimension: is_closed
@@ -52,11 +52,12 @@
   - dimension: lead_source
     sql: ${TABLE}.LEAD_SOURCE
 
-  - dimension: lost_reason_c
+  - dimension: lost_reason
     sql: ${TABLE}.LOST_REASON_C
 
   - dimension: mrr
     type: int
+    label: "MRR"
     sql: ${TABLE}.MRR
 
   - dimension: next_step
@@ -64,19 +65,20 @@
 
   - dimension: nrr
     type: int
+    label: "NRR"
     sql: ${TABLE}.NRR
 
   - dimension: probability
     type: int
     sql: ${TABLE}.PROBABILITY
 
-  - dimension: renewal_number_c
+  - dimension: renewal_number
     sql: ${TABLE}.RENEWAL_NUMBER_C
 
   - dimension: stage_name
     sql: ${TABLE}.STAGE_NAME
 
-  - dimension: total_contract_value_c
+  - dimension: total_contract_value
     type: int
     sql: ${TABLE}.TOTAL_CONTRACT_VALUE_C
 

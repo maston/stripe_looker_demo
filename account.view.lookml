@@ -6,13 +6,13 @@
     primary_key: true
     sql: ${TABLE}.ID
 
-  - dimension: account_status_c
+  - dimension: account_status
     sql: ${TABLE}.ACCOUNT_STATUS_C
 
   - dimension: annual_revenue
     sql: ${TABLE}.ANNUAL_REVENUE
 
-  - dimension: campaign2_c
+  - dimension: campaign
     sql: ${TABLE}.CAMPAIGN2_C
 
   - dimension: city
@@ -26,25 +26,25 @@
     timeframes: [time, date, week, month]
     sql: ${TABLE}.CREATED_AT
 
-  - dimension: current_customer_c
+  - dimension: current_customer
     sql: ${TABLE}.CURRENT_CUSTOMER_C
 
-  - dimension: customer_end_date_c
+  - dimension: customer_end_date
     sql: ${TABLE}.CUSTOMER_END_DATE_C
 
-  - dimension: customer_reference_c
+  - dimension: customer_reference
     sql: ${TABLE}.CUSTOMER_REFERENCE_C
 
-  - dimension: customer_start_date_c
+  - dimension: customer_start_date
     sql: ${TABLE}.CUSTOMER_START_DATE_C
 
-  - dimension: engagement_stage_c
+  - dimension: engagement_stage
     sql: ${TABLE}.ENGAGEMENT_STAGE_C
 
   - dimension: is_partner
     sql: ${TABLE}.IS_PARTNER
 
-  - dimension: market_segment_c
+  - dimension: market_segment
     sql: ${TABLE}.MARKET_SEGMENT_C
 
   - dimension: name
@@ -65,7 +65,7 @@
   - dimension: url
     sql: ${TABLE}.URL
 
-  - dimension: vertical_c
+  - dimension: vertical
     sql: ${TABLE}.VERTICAL_C
 
   - dimension: zendesk_organization

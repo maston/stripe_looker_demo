@@ -10,7 +10,8 @@
     # hidden: true
     sql: ${TABLE}.ACCOUNT_ID
 
-  - dimension: analyst_name_c
+  - dimension: analyst_name
+    hidden: true
     sql: ${TABLE}.ANALYST_NAME_C
 
   - dimension: annual_revenue
@@ -39,28 +40,28 @@
     timeframes: [time, date, week, month]
     sql: ${TABLE}.CREATED_AT
 
-  - dimension: current_customer_c
+  - dimension: current_customer
     sql: ${TABLE}.CURRENT_CUSTOMER_C
 
-  - dimension: department_c
+  - dimension: department
     sql: ${TABLE}.DEPARTMENT_C
 
   - dimension: email
     sql: ${TABLE}.EMAIL
 
-  - dimension: grouping_c
+  - dimension: grouping
     sql: ${TABLE}.GROUPING_C
 
-  - dimension: intro_meeting_c
+  - dimension: intro_meeting
     sql: ${TABLE}.INTRO_MEETING_C
 
   - dimension: is_converted
     sql: ${TABLE}.IS_CONVERTED
 
-  - dimension: job_function_c
+  - dimension: job_function
     sql: ${TABLE}.JOB_FUNCTION_C
 
-  - dimension: lead_processing_status_c
+  - dimension: lead_processing_status
     sql: ${TABLE}.LEAD_PROCESSING_STATUS_C
 
   - dimension: name
@@ -76,13 +77,13 @@
   - dimension: status
     sql: ${TABLE}.STATUS
 
-  - dimension: territory_c
+  - dimension: territory
     sql: ${TABLE}.TERRITORY_C
 
   - dimension: title
     sql: ${TABLE}.TITLE
 
-  - dimension: year_founded_c
+  - dimension: year_founded
     sql: ${TABLE}.YEAR_FOUNDED_C
 
   - dimension: zendesk_organization
