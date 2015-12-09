@@ -41,13 +41,16 @@
     primary_key: true
 
   - dimension: is_cancelled
-    sql: ${TABLE}.IS_CANCELLED_C
+    type: yesno
+    sql: ${TABLE}.IS_CANCELLED_C = 't'
 
   - dimension: is_closed
-    sql: ${TABLE}.IS_CLOSED
+    type: yesno
+    sql: ${TABLE}.IS_CLOSED = 't'
 
   - dimension: is_won
-    sql: ${TABLE}.IS_WON
+    sql: ${TABLE}.IS_WON = 't'
+    type: yesno
 
   - dimension: lead_source
     sql: ${TABLE}.LEAD_SOURCE
@@ -88,4 +91,85 @@
   - measure: count
     type: count
     drill_fields: [renewal_opportunity_id, stage_name, account.name, account.id]
+  
+  - measure: count_won
+    type: count
+    filter: 
+      is_won: yes
+    drill_fields: [opportunity.id, account.name, type, total_acv]
+  
+  - measure: count_lost
+    type: count
+    filters:
+      is_closed: Yes
+      is_won: No
+    drill_fields: [opportunity.id, account.name, type, total_acv] 
+  
+  - measure: count_open
+    type: count
+    filters:
+      is_closed: No
+    drill_fields: opportunity_set*  
+  
+  - measure: total_mrr
+    label: 'Total MRR (Closed/Won)'
+    type: sum
+    sql: ${mrr}
+    filters:
+      is_won: Yes    
+    drill_fields: opportunity_set*
+    value_format: '[>=1000000]0.00,,"M";[>=1000]0.00,"K";$0.00'
+    
+  - measure: average_mrr
+    label: 'Average MRR (Closed/Won)'
+    type: average
+    sql: ${mrr}
+    filters:
+      is_won: Yes    
+    drill_fields: opportunity_set*
+    value_format: '$#,##0'
+  
+  - measure: cumulative_total
+    type: running_total
+    sql: ${count}
+  
+  - measure: win_percentage
+    type: number
+    sql: 100.00 * ${count_won} / NULLIF(${count}, 0)
+    value_format: '#0.00\%'
+    
+  - measure: open_percentage
+    type: number
+    sql: 100.00 * ${count_open} / NULLIF(${count}, 0)
+    value_format: '#0.00\%'
+    
+  - measure: total_acv
+    type: sum
+    sql: ${acv}   
+    value_format: '[>=1000000]0.00,,"M";[>=1000]0.00,"K";$0.00' 
+    drill_fields: [account.name, type, closed_date, total_acv]
+  
+  - measure: total_acv_won
+    type: sum
+    sql: ${acv}   
+    filters:
+      is_won: Yes
+    value_format: '[>=1000000]0.00,,"M";[>=1000]0.00,"K";$0.00' 
+    drill_fields: [account.name, type, closed_date, total_acv]
+  
+  - measure: total_pipeline_acv
+    type: sum
+    decimals: 1
+    sql: ${acv}/1000000.0
+    filters:
+      is_closed: No
+    html: |
+      {{ rendered_value }}M
+  
+  sets:
+    opportunity_set:
+      - account.name
+      - stage_name_funnel
+      - type
+  
 

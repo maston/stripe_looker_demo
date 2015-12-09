@@ -4,6 +4,8 @@
 - include: "*.dashboard.lookml"  # include all the dashboards
 
 - explore: stripe_pmts
+  label: "Stripe Payments"
+  view_label: "Stripe Payments"
 
 # - explore: user_info
 
@@ -22,6 +24,8 @@
     - join: opportunity
       sql_on: ${opportunity.id} = ${lead.converted_opportunity_id}
       relationship: many_to_one
+
+- explore: opportunity
 
 
 
