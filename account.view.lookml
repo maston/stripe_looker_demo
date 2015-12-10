@@ -52,7 +52,13 @@
 
   - dimension: number_of_employees
     sql: ${TABLE}.NUMBER_OF_EMPLOYEES
-
+  
+  - dimension: number_of_employees_tier
+    type: tier
+    sql: ${number_of_employees}
+    tiers: [200,500]
+    style: integer
+    
   - dimension: ownerid
     sql: ${TABLE}.OWNERID
 
