@@ -90,26 +90,26 @@
 
   - measure: count
     type: count
-    drill_fields: [renewal_opportunity_id, stage_name, account.name, account.id]
+    drill_fields: [id, stage_name, account.name]
   
   - measure: count_won
     type: count
     filter: 
       is_won: yes
-    drill_fields: [opportunity.id, account.name, type, total_acv]
+    drill_fields: [opportunity.id, account.name, stage_name, type, total_acv]
   
   - measure: count_lost
     type: count
     filters:
       is_closed: Yes
       is_won: No
-    drill_fields: [opportunity.id, account.name, type, total_acv] 
+    drill_fields: [opportunity.id, account.name, stage_name, type, total_acv]
   
   - measure: count_open
     type: count
     filters:
       is_closed: No
-    drill_fields: opportunity_set*  
+    drill_fields: [opportunity.id, account.name, stage_name, type, total_acv]
   
   - measure: total_mrr
     label: 'Total MRR (Closed/Won)'
@@ -117,7 +117,7 @@
     sql: ${mrr}
     filters:
       is_won: Yes    
-    drill_fields: opportunity_set*
+    drill_fields: [opportunity.id, account.name, stage_name, type, total_acv]
     value_format: '[>=1000000]0.00,,"M";[>=1000]0.00,"K";$0.00'
     
   - measure: average_mrr
@@ -126,7 +126,7 @@
     sql: ${mrr}
     filters:
       is_won: Yes    
-    drill_fields: opportunity_set*
+    drill_fields: [opportunity.id, account.name, stage_name, type, total_acv]
     value_format: '$#,##0'
   
   - measure: cumulative_total
