@@ -26,6 +26,11 @@
       relationship: many_to_one
 
 - explore: opportunity
+  joins: 
+    - join: account
+      sql_on: ${account.id} = ${opportunity.account_id}
+      relationship: many_to_one
+  
 
 
 
